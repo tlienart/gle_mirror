@@ -1,0 +1,175 @@
+########################################################################
+#                                                                      #
+# GLE - Graphics Layout Engine <http://www.gle-graphics.org/>          #
+#                                                                      #
+# Modified BSD License                                                 #
+#                                                                      #
+# Copyright (C) 2009 GLE.                                              #
+#                                                                      #
+# Redistribution and use in source and binary forms, with or without   #
+# modification, are permitted provided that the following conditions   #
+# are met:                                                             #
+#                                                                      #
+#    1. Redistributions of source code must retain the above copyright #
+# notice, this list of conditions and the following disclaimer.        #
+#                                                                      #
+#    2. Redistributions in binary form must reproduce the above        #
+# copyright notice, this list of conditions and the following          #
+# disclaimer in the documentation and/or other materials provided with #
+# the distribution.                                                    #
+#                                                                      #
+#    3. The name of the author may not be used to endorse or promote   #
+# products derived from this software without specific prior written   #
+# permission.                                                          #
+#                                                                      #
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR   #
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED       #
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #
+# ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY       #
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL   #
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE    #
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS        #
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER #
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR      #
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN  #
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                        #
+#                                                                      #
+########################################################################
+#
+# files list for GLE to be included by the makefiles
+#
+INCLUDES = \
+
+OBJECTS =\
+$(BUILD_DIR)$(PATH_SEP)3dviewer.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)about.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)amove.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)arc.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)circle.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)colourbutton.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)colourpicker.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)component.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)consolewindow.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)dialogues.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)downloader.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)drawingobject.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)ellipse.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)fileinfo.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)gledrawing.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)grid.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)line.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)main.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)mainwindow.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)newfile.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)objectblocks.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)polararray.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)propertyeditor.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)propertymodel.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)qgle_statics.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)qgs.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)qgslibloader.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)serverthread.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)settings.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)settings_dialogue.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)snapline.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)text.$(OBJ_SUFF) \
+$(BUILD_DIR)$(PATH_SEP)variantdelegate.$(OBJ_SUFF)
+
+MOC_OBJECTS =\
+$(BUILD_DIR)$(PATH_SEP)3dviewer.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)about.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)arc.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)amove.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)circle.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)line.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)ellipse.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)grid.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)settings.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)settings_dialogue.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)snapline.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)text.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)propertyeditor.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)propertymodel.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)serverthread.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)newfile.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)downloader.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)dialogues.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)colourpicker.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)consolewindow.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)drawingobject.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)component.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)colourbutton.moc_obj  \
+$(BUILD_DIR)$(PATH_SEP)variantdelegate.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)gledrawing.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)polararray.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)mainwindow.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)objectblocks.moc_obj \
+$(BUILD_DIR)$(PATH_SEP)qgs.moc_obj
+
+QRC_OBJECTS =\
+$(BUILD_DIR)$(PATH_SEP)qgle.qrc_obj
+
+OBJECTS	=$(OBJECTS) $(MOC_OBJECTS) $(QRC_OBJECTS)
+
+LINKOBJS =
+
+SVGOBJS =
+
+PNGOBJS =
+
+JPEGOBJS =
+
+!ifdef HAVE_LIBTIFF
+OBJECTS = $(OBJECTS) $(TIFFOBJS)
+!endif
+
+!ifdef HAVE_LIBPNG
+OBJECTS = $(OBJECTS) $(PNGOBJS)
+!endif
+
+!ifdef HAVE_LIBJPEG
+OBJECTS = $(OBJECTS) $(JPEGOBJS)
+!endif
+
+#glegs.$(OBJ_SUFF) \
+#macspecific.$(OBJ_SUFF) \
+#MOC_DIR = moc
+#
+#MOC_SOURCES = \
+#$(MOC_DIR)$(PATH_SEP)3dviewer.cpp \
+#$(MOC_DIR)$(PATH_SEP)about.cpp \
+#$(MOC_DIR)$(PATH_SEP)amove.cpp \
+#$(MOC_DIR)$(PATH_SEP)circle.cpp
+
+#LINKOBJS =\
+#..\gle\$(BUILD_DIR)$(PATH_SEP)color.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)axis.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)curve.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)gle-base.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)gle-block.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)core.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)cutils.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)graph.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)graph2.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)var.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)polish.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)file_io.$(OBJ_SUFF) \
+#..\gle\$(BUILD_DIR)$(PATH_SEP)gle-datatype.$(OBJ_SUFF) \
+#..\gle\bitmap$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)img2ps.$(OBJ_SUFF) \
+#..\gle\bitmap$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)lzwencode.$(OBJ_SUFF) \
+#..\gle\bitmap$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)glegif.$(OBJ_SUFF) \
+#..\gle\bitmap$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)glejpeg.$(OBJ_SUFF) \
+#..\gle\bitmap$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)gletiff.$(OBJ_SUFF) \
+#..\gle\bitmap$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)glepng.$(OBJ_SUFF) \
+#..\gle\bitmap$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)ascii85.$(OBJ_SUFF) \
+#..\gle\surface$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)gsurface.$(OBJ_SUFF) \
+#..\gle\surface$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)hide.$(OBJ_SUFF) \
+#..\gle\surface$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)fcontour.$(OBJ_SUFF) \
+#..\gle\surface$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)ffitcontour.$(OBJ_SUFF) \
+#..\gle\surface$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)gcontour.$(OBJ_SUFF) \
+#..\gle\letzfitz$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)let.$(OBJ_SUFF) \
+#..\gle\letzfitz$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)fit.$(OBJ_SUFF) \
+#..\gle\letzfitz$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)ffit.$(OBJ_SUFF) \
+#..\gle\tokens$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)Tokenizer.$(OBJ_SUFF) \
+#..\gle\tokens$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)StringKeyHash.$(OBJ_SUFF) \
+#..\gle\tokens$(PATH_SEP)$(BUILD_DIR)$(PATH_SEP)BinIO.$(OBJ_SUFF)

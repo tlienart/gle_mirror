@@ -1,0 +1,269 @@
+########################################################################
+#                                                                      #
+# GLE - Graphics Layout Engine <http://www.gle-graphics.org/>          #
+#                                                                      #
+# Modified BSD License                                                 #
+#                                                                      #
+# Copyright (C) 2009 GLE.                                              #
+#                                                                      #
+# Redistribution and use in source and binary forms, with or without   #
+# modification, are permitted provided that the following conditions   #
+# are met:                                                             #
+#                                                                      #
+#    1. Redistributions of source code must retain the above copyright #
+# notice, this list of conditions and the following disclaimer.        #
+#                                                                      #
+#    2. Redistributions in binary form must reproduce the above        #
+# copyright notice, this list of conditions and the following          #
+# disclaimer in the documentation and/or other materials provided with #
+# the distribution.                                                    #
+#                                                                      #
+#    3. The name of the author may not be used to endorse or promote   #
+# products derived from this software without specific prior written   #
+# permission.                                                          #
+#                                                                      #
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR   #
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED       #
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #
+# ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY       #
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL   #
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE    #
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS        #
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER #
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR      #
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN  #
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                        #
+#                                                                      #
+########################################################################
+#
+# config.vc for windows machines using vs.net and nmake
+#
+# include the global config file
+#
+!include config.i
+#
+# other global defines
+#
+#VARIANT			=release #debug or release
+
+MSVC_TOOLSET	=vc141
+MULTI_THREADED	=mt		# or nothing - why not write multithreaded???
+CHAR_SET		=ascii #or unicode
+ARCH			=32bit #or 64bit
+VC_RUN_TIME_LIB	=dynamic # link against msvc dlls or not
+PROJECT_BINDIR 	= ..\..\build
+PROJECT_LIBDIR 	= ..\..\build\bin
+PROJECT_INCDIR 	= ..\..\include
+INSTALL_DIR     =c:\\program files\\gle
+EXE_SUFF		=.exe
+OBJ_SUFF		=obj
+CC				=cl
+AR				=link
+RM				=erase /QE
+RMDIR			=rmdir /Q /Ne
+MKDIR			=mkdir /Ne
+PATH_SEP		=^\
+!ifndef VARIANT
+VARIANT			=release
+!endif
+#
+# - charset ascii or unicode
+#
+!ifndef CHAR_SET
+CHAR_SET		=ascii
+!endif
+#
+# -- runtime lib static or dynamic
+#
+!ifndef VC_RUN_TIME_LIB
+VC_RUN_TIME_LIB	=dynamic
+!endif
+!ifndef VARIANT
+VARIANT			=debug
+!endif
+#
+# -- arch 32 or 64 bit
+#
+!ifndef ARCH
+ARCH			=32bit
+!endif
+#
+# -- UNICODE
+#
+UNICODE_CPPOPT	=
+U				=
+!if "$(CHAR_SET)" == "unicode"
+U				=u
+UNICODE_CPPOPT	=/D _UNICODE /D UNICODE
+!endif
+#
+# -- Variant - assumes release by default
+#
+_WARNINGS		=/wd4100 /wd4002 /wd4251 /wd4512 /wd4511 /wd4239 /wd4673 /wd4671 /wd4456 /wd4290
+D				=
+RTD				=
+VARIANT_CPPOPT	=/Ox /W4 /GL /GA /EHsc $(_WARNINGS) /wd4702
+RC_DEBUG_OPT	=
+VARIANT_LINKOPT	=/LTCG
+VARIANT_LIBOPT	=-machine:X86 /LTCG
+!if "$(VARIANT)" == "debug"
+D				=d
+RTD				=-gd
+VARIANT_CPPOPT	=/Od /W4 /Zi /EHsc /D _DEBUG $(_WARNINGS) #/Fd$*.pdb
+RC_DEBUG_OPT	=
+VARIANT_LINKOPT	=/DEBUG /NODEFAULTLIB:LIBCMT
+VARIANT_LIBOPT	=-machine:X86
+!endif
+#
+# -- Run Time Library
+#
+!if "$(VC_RUN_TIME_LIB)" == "dynamic"
+RUNTIME_CPPOPT	=/MD$D
+M				=$(MULTI_THREADED)$(RTD)
+!elseif "$(VC_RUN_TIME_LIB)" == "static"
+RUNTIME_CPPOPT	=/MT$D
+M				=$(MULTI_THREADED)-s$(RTD)
+!endif
+#
+#	-- tags for libraries and build directory
+#
+LIB_TAG			=-$(MSVC_TOOLSET)-$(MULTI_THREADED)$(RTD)
+BUILD_DIR		=$(MSVC_TOOLSET)-$U$M
+
+EXTRA_DEFS			=-D __WIN32__ -D __NOCYGWIN__ -D _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS -D NOMINMAX -D HAVE_CAIRO -D CAIRO_WIN32_STATIC_BUILD -D HAVE_EXTRA_FONTS -D _CRT_SECURE_NO_WARNINGS
+EXTRA_INCLUDE_PATHS	=-I$(CAIRODIR)\src
+EXTRA_LIB_PATHS		=/LIBPATH:$(CAIRODIR)\src /LIBPATH:$(PIXMANDIR)\pixman
+LIBS				=cairo$(LIB_TAG).lib pixman$(LIB_TAG).lib
+
+WINLIBS				=advapi32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib odbc32.lib oldnames.lib \
+ole32.lib oleaut32.lib rpcrt4.lib shell32.lib user32.lib uuid.lib winmm.lib winspool.lib wsock32.lib msimg32.lib\
+psapi.lib glu32.lib opengl32.lib Imm32.lib Ws2_32.lib
+
+!ifdef HAVE_LIBTIFF
+EXTRA_INCLUDE_PATHS	= $(EXTRA_INCLUDE_PATHS) -I$(LIBTIFFDIR)\libtiff
+EXTRA_DEFS			= $(EXTRA_DEFS) -D HAVE_LIBTIFF
+EXTRA_LIB_PATHS		= $(EXTRA_LIB_PATHS) /LIBPATH:$(LIBTIFFDIR)\libtiff
+LIBS				= $(LIBS) libtiff$(LIB_TAG).lib jpeg.lib
+!endif
+
+!ifdef HAVE_LIBPNG
+EXTRA_DEFS			= $(EXTRA_DEFS) -D HAVE_LIBPNG
+EXTRA_INCLUDE_PATHS	= $(EXTRA_INCLUDE_PATHS) -I$(LIBPNGDIR) -I$(ZLIBDIR)
+EXTRA_LIB_PATHS		= $(EXTRA_LIB_PATHS) /LIBPATH:$(LIBPNGDIR) /LIBPATH:$(ZLIBDIR)
+LIBS				= $(LIBS) libpng$(LIB_TAG).lib zlib$(LIB_TAG).lib
+!endif
+
+!ifdef HAVE_LIBJPEG
+EXTRA_DEFS			= $(EXTRA_DEFS) -D HAVE_LIBJPEG
+EXTRA_INCLUDE_PATHS	= $(EXTRA_INCLUDE_PATHS) -I$(JPEGDIR)
+EXTRA_LIB_PATHS		= $(EXTRA_LIB_PATHS) /LIBPATH:$(JPEGDIR)\Release
+LIBS				= $(LIBS) jpeg.lib
+!endif
+
+
+#
+#QAxContainer.lib \
+#QAxServer.lib \
+
+
+QT_LIBS = \
+Qt3Support.lib \
+QtCLucene.lib \
+QtCore.lib \
+QtDesigner.lib \
+QtDesignerComponents.lib \
+QtGui.lib \
+QtHelp.lib \
+QtMultimedia.lib \
+QtNetwork.lib \
+QtOpenGL.lib \
+QtSql.lib \
+QtSvg.lib \
+QtTest.lib \
+QtUiTools.lib \
+QtXml.lib \
+QtXmlPatterns.lib \
+Qtmain.lib \
+phonon.lib
+
+#QtWebKit.lib \
+#QtDeclarative.lib \
+#QtScript4.lib \
+#QtScriptTools4.lib \
+
+#QAxContainerd.lib \
+#QAxServerd.lib \
+
+
+QT_LIBSD = \
+Qt3Supportd.lib \
+QtCLucene.lib \
+QtCored.lib \
+QtDesigner.lib \
+QtDesignerComponents.lib \
+QtGuid.lib \
+QtHelp.lib \
+QtMultimediad.lib \
+QtNetworkd.lib \
+QtOpenGLd.lib \
+QtSqld.lib \
+QtSvgd.lib \
+QtTestd.lib \
+QtUiToolsd.lib \
+QtXmld.lib \
+QtXmlPatternsd.lib \
+Qtmaind.lib \
+phonond.lib
+
+!if "$(VARIANT)" == "debug"
+QT_LIBS=$(QT_LIBSD)
+!endif
+
+#QtScriptd4.lib \
+#QtScriptToolsd4.lib \
+
+
+!ifdef HAVE_QT
+DLFCN_DIR			= c:\sandbox\libs\dlfcn-win32\trunk
+QT_DIR				= c:\sandbox\libs\Qt\5.9.1\msvc2015_64
+QT_DIR				= c:\sandbox\libs\Qt\4.8.6
+EXTRA_DEFS			= $(EXTRA_DEFS) -DUNICODE
+EXTRA_INCLUDE_PATHS	= $(EXTRA_INCLUDE_PATHS) -I$(DLFCN_DIR) -I$(QT_DIR)\include -I$(QT_DIR)\include\QtCore -I$(QT_DIR)\include\Qt -I$(QT_DIR)\include\QtGui -I$(QT_DIR)\include\QtOpenGL -I$(QT_DIR)\include\QtWidgets -I$(QT_DIR)\include\QtNetwork
+EXTRA_LIB_PATHS		= $(EXTRA_LIB_PATHS) /LIBPATH:$(QT_DIR)\lib /LIBPATH:$(DLFCN_DIR)
+LIBS				= $(LIBS) $(WIN_LIBS) $(QT_LIBS)
+RCOPT				=/nologo /d WIN32 /d _WINDOWS
+!endif
+
+#dl$(LIB_TAG).lib
+
+CPPFLAGS	=/nologo /c $(RUNTIME_CPPOPT) $(VARIANT_CPPOPT) -I.\.. -I$(PROJECT_INCDIR) $(EXTRA_INCLUDE_PATHS) $(VERSION_INFO) $(EXTRA_DEFS) -DINSTALL_DIR="\"$(INSTALL_DIR)\""
+LINKFLAGS	=/nologo $(VARIANT_LINKOPT) /MANIFEST /LIBPATH:$(PROJECT_LIBDIR) $(EXTRA_LIB_PATHS)
+LIBFLAGS	=/nologo $(VARIANT_LIBOPT)
+
+# for win32
+LIBS	=$(LIBS) $(WINLIBS)
+
+.SUFFIXES: .moc_obj .h .rc .res .qrc .qrc_obj .cpp .c .obj
+
+{}.h{$(BUILD_DIR)}.moc_obj:
+	$(QT_DIR)\bin\moc.exe $< -o $*.moc_cpp
+	cl $(CPPFLAGS) /c /TP /Fo$@ $*.moc_cpp
+
+{}.qrc{$(BUILD_DIR)}.qrc_obj:
+	$(QT_DIR)\bin\rcc.exe $< -name qgle -o $*.qrc_cpp
+	cl $(CPPFLAGS) /c /TP /Fo$@ $*.qrc_cpp
+
+.rc.res:
+	rc $(RCOPT) /Fo$@ $<
+
+{}.c{$(BUILD_DIR)}.obj::
+	cl $(CPPFLAGS) /Fo$(BUILD_DIR)\ $<
+
+{}.cpp{$(BUILD_DIR)}.obj::
+	cl $(CPPFLAGS) /Fo$(BUILD_DIR)\ $<
+
+#$(QT_DIR)\bin\rcc.exe -binary %|fF.qrc -o %|fF.qrc_cpp
+
+
+
+

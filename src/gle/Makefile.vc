@@ -1,0 +1,93 @@
+########################################################################
+#                                                                      #
+# GLE - Graphics Layout Engine <http://www.gle-graphics.org/>          #
+#                                                                      #
+# Modified BSD License                                                 #
+#                                                                      #
+# Copyright (C) 2009 GLE.                                              #
+#                                                                      #
+# Redistribution and use in source and binary forms, with or without   #
+# modification, are permitted provided that the following conditions   #
+# are met:                                                             #
+#                                                                      #
+#    1. Redistributions of source code must retain the above copyright #
+# notice, this list of conditions and the following disclaimer.        #
+#                                                                      #
+#    2. Redistributions in binary form must reproduce the above        #
+# copyright notice, this list of conditions and the following          #
+# disclaimer in the documentation and/or other materials provided with #
+# the distribution.                                                    #
+#                                                                      #
+#    3. The name of the author may not be used to endorse or promote   #
+# products derived from this software without specific prior written   #
+# permission.                                                          #
+#                                                                      #
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR   #
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED       #
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #
+# ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY       #
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL   #
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE    #
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS        #
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER #
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR      #
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN  #
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                        #
+#                                                                      #
+########################################################################
+#
+# makefile.vc for GLE v4.0
+# for compilation with MS visual studio 2017
+#
+#
+!include ..\..\config.vc
+#
+!include files.txt
+
+all: $(BUILD_DIR) $(OBJECTS) $(GLE_OBJ) $(GLE_CPP_LIB_OBJ) $(PROJECT_BINDIR)\bin\gle$(D)$(EXE_SUFF) $(PROJECT_BINDIR)\bin\glebtool$(D)$(EXE_SUFF) $(PROJECT_BINDIR)\bin\libgle-graphics_s$(LIB_TAG).lib $(PROJECT_BINDIR)\bin\libgle-graphics$(LIB_TAG).lib $(PROJECT_BINDIR)\bin\libgle-graphics$(LIB_TAG).dll $(PROJECT_BINDIR)\glerc
+
+$(BUILD_DIR):
+	-$(MKDIR) $(BUILD_DIR)
+
+$(OBJECTS): $(INCLUDES)
+
+$(GLE_CPP_LIB_OBJ): $(GLE_CPP)
+	cl $(CPPFLAGS) -D HAVE_LIBGLE /Fo$@ /c $**
+
+$(PROJECT_BINDIR)\bin\gle$(D)$(EXE_SUFF): $(OBJECTS) $(LINKOBJS) $(GLE_OBJ)
+	$(AR) $(LINKFLAGS) $** $(LIBS) /OUT:$@
+
+$(PROJECT_BINDIR)\bin\glebtool$(D)$(EXE_SUFF): $(GLEBTOOLOBJS)
+	$(AR) $(LINKFLAGS) $** $(LIBS) /OUT:$@
+
+$(PROJECT_BINDIR)\bin\libgle-graphics_s$(LIB_TAG).lib: $(OBJECTS) $(LINKOBJS) $(GLE_CPP_LIB_OBJ)
+	LIB $(LIBFLAGS) /OUT:$@ $**
+
+$(PROJECT_BINDIR)\bin\libgle-graphics$(LIB_TAG).lib: $(OBJECTS) $(LINKOBJS) $(GLE_CPP_LIB_OBJ)
+	LIB $(LIBFLAGS) /DEF $** /OUT:$@
+
+$(PROJECT_BINDIR)\bin\libgle-graphics$(LIB_TAG).dll: $(OBJECTS) $(LINKOBJS) $(GLE_CPP_LIB_OBJ)
+	$(AR) /DLL $(LINKFLAGS) $** $(LIBS) /OUT:$@ /IMPLIB:$*.lib
+
+$(PROJECT_BINDIR)\glerc:
+	echo begin config gle	> $(PROJECT_BINDIR)\glerc
+	echo    current = $(VERSION_NUMBER).$(BUILD_NUMBER) >> $(PROJECT_BINDIR)\glerc
+	echo end config >> $(PROJECT_BINDIR)\glerc
+
+clean:
+	-$(RM) $(OBJECTS) $(GLE_CPP_LIB_OBJ) $(GLE_OBJ) $(GLEBTOOLOBJS)
+	-$(RM) $(PROJECT_BINDIR)\bin\gle$(D)$(EXE_SUFF) $(PROJECT_BINDIR)\bin\glebtool$(D)$(EXE_SUFF)
+	-$(RM) $(PROJECT_BINDIR)\bin\gle$(D).manifest $(PROJECT_BINDIR)\bin\glebtool$(D).manifest
+	-$(RM) $(PROJECT_BINDIR)\bin\libgle-graphics_s$(LIB_TAG).lib $(PROJECT_BINDIR)\bin\libgle-graphics$(LIB_TAG).lib $(PROJECT_BINDIR)\bin\libgle-graphics$(LIB_TAG).dll
+	-$(RM) $(PROJECT_BINDIR)\glerc
+	-$(RMDIR) $(BUILD_DIR)
+
+
+#gle.$(OBJ_SUFF): gle.cpp
+#	cl $(CPPFLAGS) /Fo$@ /c $**
+#
+#glebtool.$(OBJ_SUFF): glebtool.cpp
+#	cl $(CPPFLAGS) /Fo$@ /c $**
+
+
+

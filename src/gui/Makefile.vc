@@ -1,0 +1,92 @@
+########################################################################
+#                                                                      #
+# GLE - Graphics Layout Engine <http://www.gle-graphics.org/>          #
+#                                                                      #
+# Modified BSD License                                                 #
+#                                                                      #
+# Copyright (C) 2009 GLE.                                              #
+#                                                                      #
+# Redistribution and use in source and binary forms, with or without   #
+# modification, are permitted provided that the following conditions   #
+# are met:                                                             #
+#                                                                      #
+#    1. Redistributions of source code must retain the above copyright #
+# notice, this list of conditions and the following disclaimer.        #
+#                                                                      #
+#    2. Redistributions in binary form must reproduce the above        #
+# copyright notice, this list of conditions and the following          #
+# disclaimer in the documentation and/or other materials provided with #
+# the distribution.                                                    #
+#                                                                      #
+#    3. The name of the author may not be used to endorse or promote   #
+# products derived from this software without specific prior written   #
+# permission.                                                          #
+#                                                                      #
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR   #
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED       #
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #
+# ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY       #
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL   #
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE    #
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS        #
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER #
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR      #
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN  #
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                        #
+#                                                                      #
+########################################################################
+#
+# makefile.vc for GLE v4.0 for compilation with MS vc++ .net
+#
+HAVE_QT = 1
+!include ..\..\config.vc
+!include files.txt
+
+MOC_SOURCES		= $(MOC_OBJECTS:.moc_obj=.moc_cpp)
+QRC_SOURCES		= $(QRC_OBJECTS:.qrc_obj=.qrc_cpp)
+
+all: $(BUILD_DIR) $(OBJECTS) qgle.res $(PROJECT_BINDIR)\bin\qgle$(D)$(EXE_SUFF)
+
+$(BUILD_DIR):
+	-$(MKDIR) $(BUILD_DIR)
+
+$(BUILD_DIR)$(PATH_SEP)3dviewer.moc_obj: 3dviewer.h
+$(BUILD_DIR)$(PATH_SEP)about.moc_obj: about.h
+$(BUILD_DIR)$(PATH_SEP)amove.moc_obj: amove.h
+$(BUILD_DIR)$(PATH_SEP)circle.moc_obj: circle.h
+$(BUILD_DIR)$(PATH_SEP)curve.moc_obj: curve.h
+$(BUILD_DIR)$(PATH_SEP)ellipse.moc_obj: ellipse.h
+$(BUILD_DIR)$(PATH_SEP)grid.moc_obj: grid.h
+$(BUILD_DIR)$(PATH_SEP)settings.moc_obj: settings.h
+$(BUILD_DIR)$(PATH_SEP)settings_dialog.moc_obj: settings_dialog.h
+$(BUILD_DIR)$(PATH_SEP)text.moc_obj: text.h
+$(BUILD_DIR)$(PATH_SEP)snapline.moc_obj: snapline.h
+$(BUILD_DIR)$(PATH_SEP)propertyeditor.moc_obj: propertyeditor.h
+$(BUILD_DIR)$(PATH_SEP)propertymodel.moc_obj: propertymodel.h
+$(BUILD_DIR)$(PATH_SEP)serverthread.moc_obj: serverthread.h
+$(BUILD_DIR)$(PATH_SEP)newfile.moc_obj: newfile.h
+$(BUILD_DIR)$(PATH_SEP)downloader.moc_obj : downloader.h
+$(BUILD_DIR)$(PATH_SEP)dialogues.moc_obj  : dialogues.h
+$(BUILD_DIR)$(PATH_SEP)colourpicker.moc_obj : colourpicker.h
+$(BUILD_DIR)$(PATH_SEP)snapline.moc_obj : snapline.h
+$(BUILD_DIR)$(PATH_SEP)consolewindow.moc_obj: consolewindow.h
+$(BUILD_DIR)$(PATH_SEP)arc.moc_obj: arc.h
+$(BUILD_DIR)$(PATH_SEP)drawingobject.moc_obj: drawingobject.h
+$(BUILD_DIR)$(PATH_SEP)colourbutton.moc_obj: colourbutton.h
+$(BUILD_DIR)$(PATH_SEP)component.moc_obj: component.h
+$(BUILD_DIR)$(PATH_SEP)variantdelegate.moc_obj: variantdelegate.h
+$(BUILD_DIR)$(PATH_SEP)gledrawing.moc_obj: gledrawing.h
+$(BUILD_DIR)$(PATH_SEP)polararray.moc_obj: polararray.h
+$(BUILD_DIR)$(PATH_SEP)mainwindow.moc_obj: mainwindow.h
+$(BUILD_DIR)$(PATH_SEP)objectblocks.moc_obj: objectblocks.h
+$(BUILD_DIR)$(PATH_SEP)qgs.moc_obj: qgs.h
+$(BUILD_DIR)$(PATH_SEP)qgle.qrc_obj: qgle.qrc
+
+
+$(PROJECT_BINDIR)\bin\qgle$(D)$(EXE_SUFF): $(OBJECTS)
+	$(AR) /SUBSYSTEM:WINDOWS $(LINKFLAGS) /out:$@ $(OBJECTS) libgle-graphics_s$(LIB_TAG).lib $(LIBS) qgle.res
+
+clean:
+	-$(RM) $(OBJECTS) qgle.res $(PSOBJS) $(SVGOBJS) $(MOC_SOURCES) $(QRC_SOURCES) $(PROJECT_BINDIR)\bin\qgle$(EXE_SUFF) *.pdb
+	-$(RMDIR) $(BUILD_DIR)
+
